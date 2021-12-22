@@ -38,25 +38,14 @@
                     </thead>
                     <tbody class="saved-locations-container">
                         <tr>
-                            <td>mec</td>
-                            <td>231</td>
-                            <td>214</td>
-                            <td>241</td>
-                            <td>214</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>lat</td>
-                            <td>lng</td>
-                            <td>weather</td>
-                            <td>actions</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>lat</td>
-                            <td>lng</td>
-                            <td>weather</td>
-                            <td>actions</td>
+                            <td>${location.name}</td>
+                            <td>${location.lat}</td>
+                            <td>${location.lng}</td>
+                            <td>${location.weather}</td>
+                            <td>
+                                <button class="table-go-btn" onclick="onGoTable('${location.id}')"> Go </button>
+                                <button class="remove-btn" onclick="onDeleteLocation('${location.id}')">X</button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -73,7 +62,7 @@
             <div>© 2021 All Rights Reserved - Nati & Nati </div>
         </footer>
     </div>
-
+    <script src="js/services/util.service.js "></script>
     <script type="module" src="js/app.controller.js"></script>
 </body>
 
