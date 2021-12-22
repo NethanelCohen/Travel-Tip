@@ -18,7 +18,7 @@ var currMarker;
 // const MARKERS_KEY = 'markersDB';
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
-    console.log('InitMap');
+    // console.log('InitMap');
     // gMarkers = loadFromStorge(MARKERS_KEY) || [];
     return _connectGoogleApi()
         .then(() => {
@@ -37,10 +37,13 @@ function addOnMapClickListener() { /* ADD CLICK ON MAP LISTENER */
     gMap.addListener('click', (mapsMouseEvent) => {
         currPos = mapsMouseEvent.latLng;
         addMarker(currPos);
+        /// push new location to gLocations
         currMarker = currPos.toJSON()
         return currMarker;
     })
 }
+
+
 
 function searchAddress(address) {
     return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${API_KEY}`)

@@ -12,9 +12,8 @@ window.app = {
 
 function onInit() {
     mapService.initMap()
-        .then(() => {
-            onGetLocs()
-        })
+        .then(onGetLocs)
+        .then()
         .catch(() => console.log('Error: cannot init map'));
 }
 
@@ -27,7 +26,7 @@ function getPosition() {
 }
 
 function onAddMarker() {
-    // console.log('Adding a marker');
+    console.log('Adding a marker');
     console.log(mapService.currMarker);
     mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 });
 }
@@ -45,9 +44,7 @@ function onGetLocs() {
 function onGetUserPos() {
     getPosition()
         .then(pos => {
-            // console.log('User position is:', pos.coords);
-            document.querySelector('.user-pos').innerText =
-                `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
+            console.log('User position is:', pos.coords);
             return pos.coords
         })
         // Add marker and Pento when clicking "My location"
@@ -70,7 +67,8 @@ function onSearchAddress(ev) {
     const value = elInput.value
     elInput.value = ''
     mapService.searchAddress(value)
-        .then(res => console.log(res))
+        .then(rednerLoc)
+
 
 }
 
@@ -91,6 +89,7 @@ function rednerLocs(locs) {
     elSearchResults.innerHTML = strHTMLs.join('');
 }
 
-// rednerLoc() {
-
-// }
+function rednerLoc(address) {
+    document.querySelector('section h2').innerText = address.name
+        // return address
+}
