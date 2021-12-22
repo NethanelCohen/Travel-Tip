@@ -13,7 +13,7 @@
     <div class="page-container flex main-layout">
         <header class="header-container flex align-center">
             <h1>TravelTip Starter</h1>
-            <form class="enter-location-container flex" onsubmit="onSearch(event)">
+            <form class="enter-location-container flex" onsubmit="app.onSearchAddress(event)">
                 <input class="btn-get-locs" type="search" placeholder="Enter Location">
                 <button type="submit" class="btn-get-locs">Go</button>
             </form>
@@ -62,7 +62,7 @@
             <div>© 2021 All Rights Reserved - Nati & Nati </div>
         </footer>
     </div>
-    <script src="js/services/util.service.js "></script>
+    <script src="js/lib/axios.js"></script>
     <script type="module" src="js/app.controller.js"></script>
 </body>
 

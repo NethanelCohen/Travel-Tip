@@ -1,12 +1,16 @@
 // import { json } from "express/lib/response";
 
+// import { axios } from "../lib/axios.js";
+
 export const mapService = {
     initMap,
     addMarker,
     panTo,
+    searchAddress,
     currMarker
 }
 
+const API_KEY = 'AIzaSyBFajncfvkDgcqw0yOp7UTzSUZQZ0CnjR0'
 var gMap;
 var currMarker;
 
@@ -25,7 +29,6 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                     center: { lat, lng },
                     zoom: 15
                 })
-            console.log('Map!', gMap);
             addOnMapClickListener() /* ADD CLICK ON MAP LISTENER */
         })
 }
@@ -40,19 +43,20 @@ function addOnMapClickListener() { /* ADD CLICK ON MAP LISTENER */
     })
 }
 
-// let infoWindow;
-// if (infoWindow) infoWindow.close();
-// infoWindow = new google.maps.InfoWindow({
-//     position: currPos
-// });
-// infoWindow.setContent(
-//     JSON.stringify(currPos.toJSON(), null, 2)
-// );
-// infoWindow.open(gMap);
-// var latLngToString = currPos.toJSON()
-// console.log("latLngToString: ", latLngToString);
-// gMarkers.push({ latLngToString });
-
+function searchAddress(address) {
+    return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${API_KEY}`)
+        .then(res => {
+            console.log(res.data);
+            return res.data
+        })
+        .then(latLng => {
+            return latLng[results][0].geometry.location
+        })
+        // .then(latLng => )
+        .catch(err => {
+            throw err
+        });
+}
 
 function addMarker(loc) {
     var marker = new google.maps.Marker({
@@ -72,7 +76,6 @@ function panTo(lat, lng) {
 
 function _connectGoogleApi() {
     if (window.google) return Promise.resolve()
-    const API_KEY = 'AIzaSyBFajncfvkDgcqw0yOp7UTzSUZQZ0CnjR0'
     var elGoogleApi = document.createElement('script');
     elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`;
     elGoogleApi.async = true;
@@ -83,3 +86,16 @@ function _connectGoogleApi() {
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
 }
+
+// let infoWindow;
+// if (infoWindow) infoWindow.close();
+// infoWindow = new google.maps.InfoWindow({
+//     position: currPos
+// });
+// infoWindow.setContent(
+//     JSON.stringify(currPos.toJSON(), null, 2)
+// );
+// infoWindow.open(gMap);
+// var latLngToString = currPos.toJSON()
+// console.log("latLngToString: ", latLngToString);
+// gMarkers.push({ latLngToString });
