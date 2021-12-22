@@ -67,8 +67,6 @@ function onSearchAddress(ev) {
     elInput.value = ''
     mapService.searchAddress(value)
         .then(rednerLoc)
-
-
 }
 
 function rednerLocs(locs) {
