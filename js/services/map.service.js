@@ -49,7 +49,8 @@ function addOnMapClickListener() { /* ADD CLICK ON MAP LISTENER */
 
 
 function searchAddress(address) {
-    // searchedLocations = loadFromStorage(KEY) || [];
+    console.log(address)
+        // searchedLocations = loadFromStorage(KEY) || [];
     return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${API_KEY}`)
         .then(res => {
             // console.log('data from server', res.data)

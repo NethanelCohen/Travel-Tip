@@ -18,6 +18,7 @@ function getLocs() {
 }
 
 function addLocToLocs(loc) {
+
     const isLocOnStorage = locs.find(address => {
         return loc.name === address.name;
     })
