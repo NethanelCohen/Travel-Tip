@@ -46,13 +46,18 @@ function addOnMapClickListener() { /* ADD CLICK ON MAP LISTENER */
 function searchAddress(address) {
     return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${API_KEY}`)
         .then(res => {
-            console.log(res.data);
+            console.log('data from server', res.data)
             return res.data
         })
-        .then(latLng => {
-            return latLng[results][0].geometry.location
+        .then((results) => {
+            const address = {
+                name: results.results[0].formatted_address,
+                latLng: results.results[0].geometry.location
+            }
+            addMarker(address.latLng)
+            panTo(address.latLng)
+            return address
         })
-        // .then(latLng => )
         .catch(err => {
             throw err
         });
@@ -67,7 +72,7 @@ function addMarker(loc) {
     return marker;
 }
 
-function panTo(lat, lng) {
+function panTo({ lat, lng }) {
     var laLatLng = new google.maps.LatLng(lat, lng);
     gMap.panTo(laLatLng);
 }
