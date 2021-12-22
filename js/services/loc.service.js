@@ -1,5 +1,6 @@
 export const locService = {
-    getLocs
+    getLocs,
+    addAddressToLocs
 }
 
 
@@ -14,4 +15,8 @@ function getLocs() {
             resolve(locs);
         }, 2000)
     });
+}
+
+function addAddressToLocs(loc) {
+    console.log("loc: ", loc);
 }

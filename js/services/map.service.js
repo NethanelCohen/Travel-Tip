@@ -1,13 +1,12 @@
 // import { json } from "express/lib/response";
 
-// import { axios } from "../lib/axios.js";
+import { locService } from "./loc.service.js";
 
 export const mapService = {
     initMap,
     addMarker,
     panTo,
-    searchAddress,
-    currMarker
+    searchAddress
 }
 
 const API_KEY = 'AIzaSyBFajncfvkDgcqw0yOp7UTzSUZQZ0CnjR0'
@@ -44,6 +43,7 @@ function addOnMapClickListener() { /* ADD CLICK ON MAP LISTENER */
 }
 
 function searchAddress(address) {
+    // searchedLocations = loadFromStorage(KEY) || [];
     return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${API_KEY}`)
         .then(res => {
             console.log('data from server', res.data)
@@ -56,6 +56,7 @@ function searchAddress(address) {
             }
             addMarker(address.latLng, address.name)
             panTo(address.latLng)
+            locService.addAddressToLocs(address);
             return address
         })
         .catch(err => {
@@ -91,16 +92,3 @@ function _connectGoogleApi() {
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
 }
-
-// let infoWindow;
-// if (infoWindow) infoWindow.close();
-// infoWindow = new google.maps.InfoWindow({
-//     position: currPos
-// });
-// infoWindow.setContent(
-//     JSON.stringify(currPos.toJSON(), null, 2)
-// );
-// infoWindow.open(gMap);
-// var latLngToString = currPos.toJSON()
-// console.log("latLngToString: ", latLngToString);
-// gMarkers.push({ latLngToString });

@@ -33,7 +33,6 @@ function onAddMarker() {
 }
 
 
-
 function onGetLocs() {
     locService.getLocs()
         .then(locs => {
@@ -70,6 +69,8 @@ function onSearchAddress(ev) {
     const elInput = document.querySelector('.btn-get-locs')
     const value = elInput.value
     elInput.value = ''
-    mapService.searchAddress(value).then(res =>
-        console.log(res))
+    mapService.searchAddress(value)
+        .then(res => {
+            return res
+        });
 }
