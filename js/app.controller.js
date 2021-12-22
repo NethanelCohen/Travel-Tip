@@ -69,8 +69,9 @@ function onSearchAddress(ev) {
     const elInput = document.querySelector('.btn-get-locs')
     const value = elInput.value
     elInput.value = ''
-    mapService.searchAddress(value).then(res =>
-        console.log(res))
+    mapService.searchAddress(value)
+        .then(res => console.log(res))
+
 }
 
 function rednerLocs(locs) {
@@ -89,3 +90,7 @@ function rednerLocs(locs) {
     })
     elSearchResults.innerHTML = strHTMLs.join('');
 }
+
+// rednerLoc() {
+
+// }

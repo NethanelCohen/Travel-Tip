@@ -22,8 +22,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
     // gMarkers = loadFromStorge(MARKERS_KEY) || [];
     return _connectGoogleApi()
         .then(() => {
-
-            console.log('google available');
+            // console.log('google available');
             gMap = new google.maps.Map(
                 document.querySelector('#map'), {
                     center: { lat, lng },
@@ -46,7 +45,7 @@ function addOnMapClickListener() { /* ADD CLICK ON MAP LISTENER */
 function searchAddress(address) {
     return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${API_KEY}`)
         .then(res => {
-            console.log('data from server', res.data)
+            // console.log('data from server', res.data)
             return res.data
         })
         .then((results) => {
