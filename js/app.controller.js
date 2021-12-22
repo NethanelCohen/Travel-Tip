@@ -16,7 +16,7 @@ window.app = {
 function onInit() {
     mapService.initMap()
         .then(map => {
-            onGetLocs(map)
+            onGetLocs()
             return map
         })
         .then(map => addOnMapClickListener(map)) /* ADD CLICK ON MAP LISTENER */
@@ -27,7 +27,6 @@ function addOnMapClickListener(map) { /* ADD CLICK ON MAP LISTENER */
     let currPos;
     map.addListener('click', (mapsMouseEvent) => {
         currPos = mapsMouseEvent.latLng;
-        console.log(mapsMouseEvent)
         var latLng = currPos.toJSON()
         onAddMarker(currPos);
         var currMarker = {
