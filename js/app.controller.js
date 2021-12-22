@@ -28,7 +28,11 @@ function onAddMarker() {
     mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 });
 }
 
-function onGetLocs() {
+function onGetLocs(ev) {
+    ev.preventDefault()
+    const elInput = document.querySelector('.btn-get-locs')
+    const value = elInput.value
+    elInput.value = ''
     locService.getLocs()
         .then(locs => {
             console.log('Locations:', locs)
