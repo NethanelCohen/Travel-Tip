@@ -62,7 +62,7 @@ function onPanTo() {
 
 function onSearchAddress(ev) {
     ev.preventDefault()
-    const elInput = document.querySelector('.btn-get-locs')
+    const elInput = document.querySelector('.location-input')
     const value = elInput.value
     elInput.value = ''
     mapService.searchAddress(value)
