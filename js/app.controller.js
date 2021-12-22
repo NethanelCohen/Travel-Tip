@@ -26,13 +26,15 @@ function addOnMapClickListener(map) { /* ADD CLICK ON MAP LISTENER */
     let currPos;
     map.addListener('click', (mapsMouseEvent) => {
         currPos = mapsMouseEvent.latLng;
+        console.log(mapsMouseEvent)
         var latLng = currPos.toJSON()
+        onAddMarker(currPos);
         var currMarker = {
             name: 'on map click',
             latLng
         }
         locService.addLocToLocs(currMarker);
-        onAddMarker(currPos);
+
         return currMarker;
     })
 }
