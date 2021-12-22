@@ -10,26 +10,26 @@ window.app = {
     onGetUserPos
 }
 
+
 function onInit() {
     mapService.initMap()
         .then(map => {
             onGetLocs(map)
             return map
         })
-        .then(map => addOnMapClickListener(map) /* ADD CLICK ON MAP LISTENER */ )
+        .then(map => addOnMapClickListener(map)) /* ADD CLICK ON MAP LISTENER */
         .catch(() => console.log('Error: cannot init map'));
 }
 
 function addOnMapClickListener(map) { /* ADD CLICK ON MAP LISTENER */
     let currPos;
-    map.addListener('click', (mapsMouseEvent) => {
-        currPos = mapsMouseEvent.latLng;
+    map.addListener('click', (event) => {
+        currPos = event.latLng;
         var latLng = currPos.toJSON()
         var currMarker = {
-                name: 'on map click',
                 latLng
             }
-            // mapService.addMarker(currPos)
+            // name: 'on map click',
         locService.addLocToLocs(currMarker);
         onAddMarker(currPos);
         return currMarker;
@@ -46,8 +46,6 @@ function getPosition() {
 }
 
 function onAddMarker(pos) {
-    console.log('Adding a marker');
-    console.log(mapService.currMarker);
     mapService.addMarker(pos);
     onGetLocs()
 }
