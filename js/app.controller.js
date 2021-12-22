@@ -25,6 +25,7 @@ function getPosition() {
 
 function onAddMarker() {
     console.log('Adding a marker');
+    console.log(mapService.currMarker);
     mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 });
 }
 
@@ -42,11 +43,18 @@ function onGetUserPos() {
             console.log('User position is:', pos.coords);
             document.querySelector('.user-pos').innerText =
                 `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
+            return pos.coords
+        })
+        // Add marker and Pento when clicking "My location"
+        .then(latLng => {
+            mapService.addMarker({ lat: latLng.latitude, lng: latLng.longitude }); /* MARKER */
+            mapService.panTo({ lat: latLng.latitude, lng: latLng.longitude }) /* PAN-TO */
         })
         .catch(err => {
             console.log('err!!!', err);
         })
 }
+
 function onPanTo() {
     console.log('Panning the Map');
     mapService.panTo(35.6895, 139.6917);
