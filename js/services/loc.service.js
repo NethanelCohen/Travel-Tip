@@ -1,6 +1,7 @@
 export const locService = {
     getLocs,
-    addLocToLocs
+    addLocToLocs,
+    getlocation
 }
 
 var gNextId = 0;
@@ -15,6 +16,10 @@ function getLocs() {
     return new Promise((resolve, reject) => {
         resolve(locs)
     });
+}
+
+function getlocation(locationID) {
+    return locs.find((loc) => loc.id === locationID);
 }
 
 function addLocToLocs(loc) {

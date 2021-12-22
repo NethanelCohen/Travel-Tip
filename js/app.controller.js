@@ -7,7 +7,8 @@ window.app = {
     onAddMarker,
     onPanTo,
     onGetLocs,
-    onGetUserPos
+    onGetUserPos,
+    renderLocationOnMap
 }
 
 function onInit() {
@@ -26,10 +27,9 @@ function addOnMapClickListener(map) { /* ADD CLICK ON MAP LISTENER */
         currPos = mapsMouseEvent.latLng;
         var latLng = currPos.toJSON()
         var currMarker = {
-                name: 'on map click',
-                latLng
-            }
-            // mapService.addMarker(currPos)
+            name: 'on map click',
+            latLng
+        }
         locService.addLocToLocs(currMarker);
         onAddMarker(currPos);
         return currMarker;
@@ -39,16 +39,14 @@ function addOnMapClickListener(map) { /* ADD CLICK ON MAP LISTENER */
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {
-    // console.log('Getting Pos');
     return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject)
     })
 }
 
-function onAddMarker(pos) {
-    console.log('Adding a marker');
-    console.log(mapService.currMarker);
-    mapService.addMarker(pos);
+function onAddMarker(pos, name) {
+    console.log(pos)
+    mapService.addMarker(pos, name);
     onGetLocs()
 }
 
@@ -77,8 +75,8 @@ function onGetUserPos() {
         })
 }
 
-function onPanTo() {
-    mapService.panTo(35.6895, 139.6917);
+function onPanTo(lat = 35.6895, lng = 139.6917) {
+    mapService.panTo(lat, lng);
 }
 
 function onSearchAddress(ev) {
@@ -94,6 +92,8 @@ function onSearchAddress(ev) {
         .then(rednerLoc)
 }
 
+
+
 function rednerLocs(locs) {
     const elSearchResults = document.querySelector('.saved-locations-container');
     var strHTMLs = locs.map(loc => {
@@ -103,13 +103,19 @@ function rednerLocs(locs) {
         <td>${loc.lng}</td>
         <td>${loc.weather}</td>
         <td>
-            <button class="table-go-btn" onclick="onGoTable('${loc.id}')"> Go </button>
-            <button class="remove-btn" onclick="onDeleteLocation('${loc.id}')">X</button>
+            <button class="table-go-btn" onclick="app.renderLocationOnMap(${loc.id})"> Go </button>
+            <button class="remove-btn" onclick="app.onDeleteLocation(${loc.id})">X</button>
         </td>
     </tr>`
     })
     elSearchResults.innerHTML = strHTMLs.join('');
     return locs
+}
+
+function renderLocationOnMap(id) {
+    const { lat, lng, name } = locService.getlocation(id)
+    onAddMarker({ lat, lng }, name)
+    onPanTo(lat, lng)
 }
 
 function rednerLoc(address) {
