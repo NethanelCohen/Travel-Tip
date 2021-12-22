@@ -36,8 +36,12 @@ function addOnMapClickListener() { /* ADD CLICK ON MAP LISTENER */
     gMap.addListener('click', (mapsMouseEvent) => {
         currPos = mapsMouseEvent.latLng;
         addMarker(currPos);
-        /// push new location to gLocations
-        currMarker = currPos.toJSON()
+        var latLng = currPos.toJSON()
+        var currMarker = {
+            name: 'on map click',
+            latLng
+        }
+        locService.addLocToLocs(currMarker);
         return currMarker;
     })
 }
@@ -58,7 +62,7 @@ function searchAddress(address) {
             }
             addMarker(address.latLng, address.name)
             panTo(address.latLng)
-            locService.addAddressToLocs(address);
+            locService.addLocToLocs(address);
             return address
         })
         .catch(err => {
