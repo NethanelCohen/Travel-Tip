@@ -10,48 +10,68 @@
 </head>
 
 <body>
-    <div class="page-container">
-        <header>
-            <div class="header-container flex align-center">
-                <h1>TravelTip Starter</h1>
-                <form class="enter-location-container flex" onsubmit="onGetLocs(event)">
-<<<<<<< HEAD
-                    <input class="btn-get-locs" type="search" placeholder="Enter -s- Location">
-=======
-                    <input class="btn-get-locs" type="search" placeholder="Enter yours Location">
->>>>>>> 695e5d8febb2f3bd81b65aec044a8492516f98bb
-                    <button type="submit" class="btn-get-locs">Go</button>
-                </form>
-                <button onclick="onGetUserPos()" class="btn-user-pos">My Location</button>
-            </div>
+    <div class="page-container flex main-layout">
+        <header class="header-container flex align-center">
+            <h1>TravelTip Starter</h1>
+            <form class="enter-location-container flex" onsubmit="onGetLocs(event)">
+                <input class="btn-get-locs" type="search" placeholder="Enter Location">
+                <button type="submit" class="btn-get-locs">Go</button>
+            </form>
+            <button onclick="onGetUserPos()" class="btn-user-pos">My Location</button>
         </header>
-        <section>
-            <div class="location-display-conatiner flex">
-                <h2>Location Name</h2>
-                <button class="copy-location">Copy Location</button>
-            </div>
+        <section class="location-display-conatiner flex align-center">
+            <h2>Location Name</h2>
+            <button class="copy-location">Copy Location</button>
         </section>
-        <main>
-            <div class="main-container grid">
-                <div class="weather-container">
-                    <div class="saved-locations">
-                        <table>
-                            <th>
-                                <td></td>
-                            </th>
-                        </table>
-                    </div>
-                </div>
-                <div id="map"></div>
+        <main class="main-container grid ">
+            <div class="weather-container ">weather</div>
+            <div class="locations-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <td>name</td>
+                            <td>lat</td>
+                            <td>lng</td>
+                            <td>weather</td>
+                            <td>actions</td>
+                        </tr>
+                    </thead>
+                    <tbody class="saved-locations-container">
+                        <tr>
+                            <td>mec</td>
+                            <td>231</td>
+                            <td>214</td>
+                            <td>241</td>
+                            <td>214</td>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>lat</td>
+                            <td>lng</td>
+                            <td>weather</td>
+                            <td>actions</td>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>lat</td>
+                            <td>lng</td>
+                            <td>weather</td>
+                            <td>actions</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <button onclick="onAddMarker()" class="btn-add-marker">Add Marker Speific Location</button>
+            <div id="map"></div>
 
 
-            <button onclick="onPanTo()" class="btn-pan">Pan Map to Tokyo</button>
 
-            <p>You are at: <span class="user-pos"></span></p>
-            <p>Locations: <span class="locs"></span></p>
+            <!-- <button onclick="onAddMarker()" class="btn-add-marker">Add Marker Speific Location</button> -->
+            <!-- <button onclick="onPanTo()" class="btn-pan">Pan Map to Tokyo</button> -->
+            <!-- <p>You are at: <span class="user-pos"></span></p> -->
         </main>
+        <footer class="copy-rights ">
+            <div>© 2021 All Rights Reserved - Nati & Nati </div>
+        </footer>
     </div>
 
     <script type="module" src="js/app.controller.js"></script>
