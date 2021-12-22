@@ -8,7 +8,8 @@ window.app = {
     onPanTo,
     onGetLocs,
     onGetUserPos,
-    renderLocationOnMap
+    renderLocationOnMap,
+    onRemoveLocation
 }
 
 function onInit() {
@@ -45,7 +46,6 @@ function getPosition() {
 }
 
 function onAddMarker(pos, name) {
-    console.log(pos)
     mapService.addMarker(pos, name);
     onGetLocs()
 }
@@ -54,7 +54,6 @@ function onAddMarker(pos, name) {
 function onGetLocs() {
     locService.getLocs()
         .then(locs => {
-            if (!locs.length) return
             rednerLocs(locs)
         })
 }
@@ -99,12 +98,12 @@ function rednerLocs(locs) {
     var strHTMLs = locs.map(loc => {
         return `<tr>
         <td>${loc.name}</td>
-        <td>${loc.lat}</td>
-        <td>${loc.lng}</td>
+        <td>${loc.lat.toFixed(3)}</td>
+        <td>${loc.lng.toFixed(3)}</td>
         <td>${loc.weather}</td>
         <td>
             <button class="table-go-btn" onclick="app.renderLocationOnMap(${loc.id})"> Go </button>
-            <button class="remove-btn" onclick="app.onDeleteLocation(${loc.id})">X</button>
+            <button class="remove-btn" onclick="app.onRemoveLocation(${loc.id})">X</button>
         </td>
     </tr>`
     })
@@ -116,6 +115,11 @@ function renderLocationOnMap(id) {
     const { lat, lng, name } = locService.getlocation(id)
     onAddMarker({ lat, lng }, name)
     onPanTo(lat, lng)
+    rednerLoc({ name })
+}
+
+function onRemoveLocation(id) {
+    onGetLocs(locService.removeLocation(id))
 }
 
 function rednerLoc(address) {

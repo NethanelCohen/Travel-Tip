@@ -1,13 +1,14 @@
 export const locService = {
     getLocs,
     addLocToLocs,
-    getlocation
+    getlocation,
+    removeLocation
 }
 
 var gNextId = 0;
 const LOCS_KEY = 'locs_DB';
 
-const locs = [
+var locs = [
     { id: _makeId(), name: 'Greatplace', lat: 32.047104, lng: 34.832384, weather: 'hot' },
     { id: _makeId(), name: 'Neveragain', lat: 32.047201, lng: 34.832581, weather: 'cold' }
 ]
@@ -20,6 +21,11 @@ function getLocs() {
 
 function getlocation(locationID) {
     return locs.find((loc) => loc.id === locationID);
+}
+
+function removeLocation(id) {
+    locs = locs.filter((loc) => loc.id !== id);
+    saveToStorage(LOCS_KEY, locs);
 }
 
 function addLocToLocs(loc) {
