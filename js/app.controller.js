@@ -13,7 +13,7 @@ window.app = {
 function onInit() {
     mapService.initMap()
         .then(() => {
-            console.log('Map is ready');
+            onGetLocs()
         })
         .catch(() => console.log('Error: cannot init map'));
 }
@@ -37,8 +37,8 @@ function onAddMarker() {
 function onGetLocs() {
     locService.getLocs()
         .then(locs => {
-            // console.log('Locations:', locs)
-            document.querySelector('.saved-locations-container').innerText = JSON.stringify(locs)
+            if (!locs.length) return
+            rednerLocs(locs)
         })
 }
 
@@ -61,7 +61,6 @@ function onGetUserPos() {
 }
 
 function onPanTo() {
-    // console.log('Panning the Map');
     mapService.panTo(35.6895, 139.6917);
 }
 
@@ -72,4 +71,21 @@ function onSearchAddress(ev) {
     elInput.value = ''
     mapService.searchAddress(value).then(res =>
         console.log(res))
+}
+
+function rednerLocs(locs) {
+    const elSearchResults = document.querySelector('.saved-locations-container');
+    var strHTMLs = locs.map(loc => {
+        return `<tr>
+        <td>${loc.name}</td>
+        <td>${loc.lat}</td>
+        <td>${loc.lng}</td>
+        <td>${loc.weather}</td>
+        <td>
+            <button class="table-go-btn" onclick="onGoTable('${loc.id}')"> Go </button>
+            <button class="remove-btn" onclick="onDeleteLocation('${loc.id}')">X</button>
+        </td>
+    </tr>`
+    })
+    elSearchResults.innerHTML = strHTMLs.join('');
 }
