@@ -54,6 +54,8 @@ button:hover {
     margin-inline-end: 0.5em;
     width: 20em;
     background-color: white;
+    border-radius: 6px;
+    border: none;
 }
 
 ::placeholder {
@@ -80,8 +82,9 @@ button:hover {
 .btn-user-pos,
 .copy-location {
     border-radius: 6px;
-    background-color: #ffc10796;
+    background-color: #ffc107db;
     padding: 5.6px 5.3px 5.1px 5.3px;
+    border: none;
 }
 
 .btn-user-pos {
@@ -144,6 +147,7 @@ thead {
 }
 
 thead td {
+    min-width: 190px;
     border: 1px solid black;
     border-bottom: 2px solid black;
 }
@@ -166,6 +170,22 @@ td:last-child * {
 
 tbody {
     background-color: #ffc10796;
+}
+
+.table-go-btn {
+    width: 4rem;
+    background-color: greenyellow;
+}
+
+.remove-btn {
+    border-radius: 6px;
+    background-color: red;
+}
+
+.table-go-btn,
+.remove-btn {
+    border-radius: 6px;
+    border: none;
 }
 
 .copy-rights {

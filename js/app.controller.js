@@ -7,7 +7,9 @@ window.app = {
     onAddMarker,
     onPanTo,
     onGetLocs,
-    onGetUserPos
+    onGetUserPos,
+    renderLocationOnMap,
+    onRemoveLocation
 }
 
 
@@ -39,14 +41,13 @@ function addOnMapClickListener(map) { /* ADD CLICK ON MAP LISTENER */
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {
-    // console.log('Getting Pos');
     return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject)
     })
 }
 
-function onAddMarker(pos) {
-    mapService.addMarker(pos);
+function onAddMarker(pos, name) {
+    mapService.addMarker(pos, name);
     onGetLocs()
 }
 
@@ -54,7 +55,6 @@ function onAddMarker(pos) {
 function onGetLocs() {
     locService.getLocs()
         .then(locs => {
-            if (!locs.length) return
             rednerLocs(locs)
         })
 }
@@ -75,8 +75,8 @@ function onGetUserPos() {
         })
 }
 
-function onPanTo() {
-    mapService.panTo(35.6895, 139.6917);
+function onPanTo(lat = 35.6895, lng = 139.6917) {
+    mapService.panTo(lat, lng);
 }
 
 function onSearchAddress(ev) {
@@ -92,22 +92,35 @@ function onSearchAddress(ev) {
         .then(rednerLoc)
 }
 
+
+
 function rednerLocs(locs) {
     const elSearchResults = document.querySelector('.saved-locations-container');
     var strHTMLs = locs.map(loc => {
         return `<tr>
         <td>${loc.name}</td>
-        <td>${loc.lat}</td>
-        <td>${loc.lng}</td>
+        <td>${loc.lat.toFixed(3)}</td>
+        <td>${loc.lng.toFixed(3)}</td>
         <td>${loc.weather}</td>
         <td>
-            <button class="table-go-btn" onclick="onGoTable('${loc.id}')"> Go </button>
-            <button class="remove-btn" onclick="onDeleteLocation('${loc.id}')">X</button>
+            <button class="table-go-btn" onclick="app.renderLocationOnMap(${loc.id})"> Go </button>
+            <button class="remove-btn" onclick="app.onRemoveLocation(${loc.id})">X</button>
         </td>
     </tr>`
     })
     elSearchResults.innerHTML = strHTMLs.join('');
     return locs
+}
+
+function renderLocationOnMap(id) {
+    const { lat, lng, name } = locService.getlocation(id)
+    onAddMarker({ lat, lng }, name)
+    onPanTo(lat, lng)
+    rednerLoc({ name })
+}
+
+function onRemoveLocation(id) {
+    onGetLocs(locService.removeLocation(id))
 }
 
 function rednerLoc(address) {
