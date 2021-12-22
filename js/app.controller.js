@@ -12,10 +12,30 @@ window.app = {
 
 function onInit() {
     mapService.initMap()
-        .then(onGetLocs)
-        .then()
+        .then(map => {
+            onGetLocs(map)
+            return map
+        })
+        .then(map => addOnMapClickListener(map) /* ADD CLICK ON MAP LISTENER */ )
         .catch(() => console.log('Error: cannot init map'));
 }
+
+function addOnMapClickListener(map) { /* ADD CLICK ON MAP LISTENER */
+    let currPos;
+    map.addListener('click', (mapsMouseEvent) => {
+        currPos = mapsMouseEvent.latLng;
+        var latLng = currPos.toJSON()
+        var currMarker = {
+                name: 'on map click',
+                latLng
+            }
+            // mapService.addMarker(currPos)
+        locService.addLocToLocs(currMarker);
+        onAddMarker(currPos);
+        return currMarker;
+    })
+}
+
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {
@@ -25,10 +45,11 @@ function getPosition() {
     })
 }
 
-function onAddMarker() {
+function onAddMarker(pos) {
     console.log('Adding a marker');
     console.log(mapService.currMarker);
-    mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 });
+    mapService.addMarker(pos);
+    onGetLocs()
 }
 
 
@@ -66,6 +87,10 @@ function onSearchAddress(ev) {
     const value = elInput.value
     elInput.value = ''
     mapService.searchAddress(value)
+        .then((value) => {
+            onGetLocs()
+            return value
+        })
         .then(rednerLoc)
 }
 
@@ -84,9 +109,10 @@ function rednerLocs(locs) {
     </tr>`
     })
     elSearchResults.innerHTML = strHTMLs.join('');
+    return locs
 }
 
 function rednerLoc(address) {
     document.querySelector('section h2').innerText = address.name
-        // return address
+    return address
 }

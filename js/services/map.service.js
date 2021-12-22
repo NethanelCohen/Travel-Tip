@@ -27,24 +27,11 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                     center: { lat, lng },
                     zoom: 15
                 })
-            addOnMapClickListener() /* ADD CLICK ON MAP LISTENER */
+            return gMap
         })
 }
 
-function addOnMapClickListener() { /* ADD CLICK ON MAP LISTENER */
-    let currPos;
-    gMap.addListener('click', (mapsMouseEvent) => {
-        currPos = mapsMouseEvent.latLng;
-        addMarker(currPos);
-        var latLng = currPos.toJSON()
-        var currMarker = {
-            name: 'on map click',
-            latLng
-        }
-        locService.addLocToLocs(currMarker);
-        return currMarker;
-    })
-}
+
 
 
 
