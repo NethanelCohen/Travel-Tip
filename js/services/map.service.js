@@ -54,7 +54,7 @@ function searchAddress(address) {
                 name: results.results[0].formatted_address,
                 latLng: results.results[0].geometry.location
             }
-            addMarker(address.latLng)
+            addMarker(address.latLng, address.name)
             panTo(address.latLng)
             return address
         })
@@ -63,11 +63,11 @@ function searchAddress(address) {
         });
 }
 
-function addMarker(loc) {
+function addMarker(loc, name) {
     var marker = new google.maps.Marker({
         position: loc,
         map: gMap,
-        title: 'Hello World!'
+        title: name
     });
     return marker;
 }
