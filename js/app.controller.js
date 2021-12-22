@@ -12,9 +12,8 @@ window.app = {
 
 function onInit() {
     mapService.initMap()
-        .then(() => {
-            console.log('Map is ready');
-        })
+        .then(onGetLocs)
+        .then()
         .catch(() => console.log('Error: cannot init map'));
 }
 
@@ -27,7 +26,7 @@ function getPosition() {
 }
 
 function onAddMarker() {
-    // console.log('Adding a marker');
+    console.log('Adding a marker');
     console.log(mapService.currMarker);
     mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 });
 }
@@ -36,17 +35,15 @@ function onAddMarker() {
 function onGetLocs() {
     locService.getLocs()
         .then(locs => {
-            // console.log('Locations:', locs)
-            document.querySelector('.saved-locations-container').innerText = JSON.stringify(locs)
+            if (!locs.length) return
+            rednerLocs(locs)
         })
 }
 
 function onGetUserPos() {
     getPosition()
         .then(pos => {
-            // console.log('User position is:', pos.coords);
-            document.querySelector('.user-pos').innerText =
-                `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
+            console.log('User position is:', pos.coords);
             return pos.coords
         })
         // Add marker and Pento when clicking "My location"
@@ -60,7 +57,6 @@ function onGetUserPos() {
 }
 
 function onPanTo() {
-    // console.log('Panning the Map');
     mapService.panTo(35.6895, 139.6917);
 }
 
@@ -70,7 +66,29 @@ function onSearchAddress(ev) {
     const value = elInput.value
     elInput.value = ''
     mapService.searchAddress(value)
-        .then(res => {
-            return res
-        });
+        .then(rednerLoc)
+
+
+}
+
+function rednerLocs(locs) {
+    const elSearchResults = document.querySelector('.saved-locations-container');
+    var strHTMLs = locs.map(loc => {
+        return `<tr>
+        <td>${loc.name}</td>
+        <td>${loc.lat}</td>
+        <td>${loc.lng}</td>
+        <td>${loc.weather}</td>
+        <td>
+            <button class="table-go-btn" onclick="onGoTable('${loc.id}')"> Go </button>
+            <button class="remove-btn" onclick="onDeleteLocation('${loc.id}')">X</button>
+        </td>
+    </tr>`
+    })
+    elSearchResults.innerHTML = strHTMLs.join('');
+}
+
+function rednerLoc(address) {
+    document.querySelector('section h2').innerText = address.name
+        // return address
 }

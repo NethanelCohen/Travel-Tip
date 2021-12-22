@@ -17,7 +17,7 @@
                 <input class="btn-get-locs" type="search" placeholder="Enter Location">
                 <button type="submit" class="btn-get-locs">Go</button>
             </form>
-            <button onclick="onGetUserPos()" class="btn-user-pos">My Location</button>
+            <button onclick="app.onGetUserPos()" class="btn-user-pos">My Location</button>
         </header>
         <section class="location-display-conatiner flex align-center">
             <h2>Location Name</h2>
@@ -37,16 +37,7 @@
                         </tr>
                     </thead>
                     <tbody class="saved-locations-container">
-                        <tr>
-                            <td>${location.name}</td>
-                            <td>${location.lat}</td>
-                            <td>${location.lng}</td>
-                            <td>${location.weather}</td>
-                            <td>
-                                <button class="table-go-btn" onclick="onGoTable('${location.id}')"> Go </button>
-                                <button class="remove-btn" onclick="onDeleteLocation('${location.id}')">X</button>
-                            </td>
-                        </tr>
+
                     </tbody>
                 </table>
             </div>
