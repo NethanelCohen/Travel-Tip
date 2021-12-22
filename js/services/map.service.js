@@ -11,7 +11,7 @@ export const mapService = {
 
 const API_KEY = 'AIzaSyBFajncfvkDgcqw0yOp7UTzSUZQZ0CnjR0'
 var gMap;
-var currMarker;
+var gMarkers = [];
 
 // var gMarkers = [];
 // const MARKERS_KEY = 'markersDB';
@@ -30,9 +30,6 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             return gMap
         })
 }
-
-
-
 
 
 function searchAddress(address) {
@@ -59,12 +56,32 @@ function searchAddress(address) {
 }
 
 function addMarker(loc, name) {
+    clearLastMarker()
+    const clickedName = getMarkerAddress(loc.toJSON());
     var marker = new google.maps.Marker({
         position: loc,
         map: gMap,
-        title: name
+        title: (name) ? name : clickedName
     });
-    return marker;
+    gMarkers.push(marker);
+}
+
+function getMarkerAddress(pos) {
+    return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${pos.lat},${pos.lng}&key=${API_KEY}`)
+        .then(res => {
+            console.log(res.data);
+            return res.data
+        })
+        .then((value) => {
+            const addressName = value.results[1].formatted_address;
+            return addressName;
+        })
+}
+
+function clearLastMarker() {
+    for (let i = 0; i < gMarkers.length; i++) {
+        gMarkers[i].setMap(null);
+    }
 }
 
 function panTo(lat, lng) {

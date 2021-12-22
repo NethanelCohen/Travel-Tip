@@ -12,13 +12,14 @@ window.app = {
     onRemoveLocation
 }
 
+
 function onInit() {
     mapService.initMap()
         .then(map => {
             onGetLocs(map)
             return map
         })
-        .then(map => addOnMapClickListener(map) /* ADD CLICK ON MAP LISTENER */ )
+        .then(map => addOnMapClickListener(map)) /* ADD CLICK ON MAP LISTENER */
         .catch(() => console.log('Error: cannot init map'));
 }
 
@@ -30,9 +31,9 @@ function addOnMapClickListener(map) { /* ADD CLICK ON MAP LISTENER */
         var latLng = currPos.toJSON()
         onAddMarker(currPos);
         var currMarker = {
-            name: 'on map click',
-            latLng
-        }
+                latLng
+            }
+            // name: 'on map click',
         locService.addLocToLocs(currMarker);
 
         return currMarker;
