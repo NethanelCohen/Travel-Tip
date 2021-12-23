@@ -57,6 +57,7 @@ function searchAddress(address) {
 
 function addMarker(loc, name) {
     clearLastMarker()
+    getMarkerAddress(loc)
     var marker = new google.maps.Marker({
         position: loc,
         map: gMap,
