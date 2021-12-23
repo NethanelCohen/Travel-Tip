@@ -57,11 +57,11 @@ function searchAddress(address) {
 
 function addMarker(loc, name) {
     clearLastMarker()
-    getMarkerAddress(loc)
+    const clickedName = getMarkerAddress(loc.toJSON());
     var marker = new google.maps.Marker({
         position: loc,
         map: gMap,
-        title: name || 'clicked Location'
+        title: (name) ? name : clickedName
     });
     gMarkers.push(marker);
 }
