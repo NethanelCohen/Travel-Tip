@@ -68,7 +68,8 @@ function addMarker(loc, name) {
 function addMarker2(loc) {
     clearLastMarker()
     getMarkerAddress(loc.toJSON())
-        .then((name) => {
+
+    .then((name) => {
             var marker = new google.maps.Marker({
                 position: loc,
                 map: gMap,
@@ -78,6 +79,10 @@ function addMarker2(loc) {
         })
         .then((marker) => {
             gMarkers.push(marker)
+            return marker
+        })
+        .then((marker) => {
+
         })
 }
 

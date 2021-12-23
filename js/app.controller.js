@@ -33,8 +33,7 @@ function addOnMapClickListener(map) { /* ADD CLICK ON MAP LISTENER */
                 latLng
             }
             // name: 'on map click',
-        locService.addLocToLocs(currMarker);
-
+            // locService.addLocToLocs(currMarker);
         return currMarker;
     })
 }
