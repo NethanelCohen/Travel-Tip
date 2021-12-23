@@ -48,6 +48,7 @@ function getPosition() {
 }
 
 function onAddMarker(pos, name) {
+    if (!name) mapService.addMarker2(pos);
     mapService.addMarker(pos, name);
     onGetLocs()
 }
@@ -117,7 +118,7 @@ function renderLocationOnMap(id) {
     const { lat, lng, name } = locService.getlocation(id)
     onAddMarker({ lat, lng }, name)
     onPanTo(lat, lng)
-    rednerLoc({ name })
+    rednerLoc(undefined, name)
 }
 
 function onRemoveLocation(id) {

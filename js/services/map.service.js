@@ -6,7 +6,8 @@ export const mapService = {
     initMap,
     addMarker,
     panTo,
-    searchAddress
+    searchAddress,
+    addMarker2
 }
 
 const API_KEY = 'AIzaSyBFajncfvkDgcqw0yOp7UTzSUZQZ0CnjR0'
@@ -56,14 +57,28 @@ function searchAddress(address) {
 }
 
 function addMarker(loc, name) {
-    clearLastMarker()
-    const clickedName = getMarkerAddress(loc.toJSON());
     var marker = new google.maps.Marker({
         position: loc,
         map: gMap,
-        title: (name) ? name : clickedName
+        title: name
     });
     gMarkers.push(marker);
+}
+
+function addMarker2(loc) {
+    clearLastMarker()
+    getMarkerAddress(loc.toJSON())
+        .then((name) => {
+            var marker = new google.maps.Marker({
+                position: loc,
+                map: gMap,
+                title: name
+            })
+            return marker
+        })
+        .then((marker) => {
+            gMarkers.push(marker)
+        })
 }
 
 function getMarkerAddress(pos) {
